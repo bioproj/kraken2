@@ -9,3 +9,5 @@ read/build_db
 read/build_db.*
 read/classify
 read/classify.*
+
+*.tmp

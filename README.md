@@ -26,15 +26,30 @@
     -r 0 
 
 
-cat /opt/workspace/kraken2/kraken2/data/small_db/library/added/O_jVnIIAMS.fna |  /opt/workspace/kraken2/install/build_db \
+cat /opt/workspace/kraken2/kraken2/data/small_db/library/added/FKmc8uicpL.fna | /opt/workspace/kraken2/kraken2/read/build_db \
     -k 35 \
     -l 31 \
     -S 1111111111111111101010101010101 \
     -H hash.k2d.tmp \
     -t taxo.k2d.tmp \
     -o opts.k2d.tmp \
-    -n taxonomy/ \
-    -m seqid2taxid.map \
+    -n /opt/workspace/kraken2/kraken2/data/small_db/taxonomy/ \
+    -m /opt/workspace/kraken2/kraken2/data/small_db/seqid2taxid.map \
+    -c 24137 \
+    -p 1 \
+    -B 16384 \
+    -b 16384 \
+    -r 0
+
+cat /opt/workspace/kraken2/kraken2/data/small_db/library/added/FKmc8uicpL.fna |/opt/workspace/kraken2/kraken2/install/build_db \
+    -k 35 \
+    -l 31 \
+    -S 1111111111111111101010101010101 \
+    -H hash.k2d.tmp \
+    -t taxo.k2d.tmp \
+    -o opts.k2d.tmp \
+    -n /opt/workspace/kraken2/kraken2/data/small_db/taxonomy/ \
+    -m /opt/workspace/kraken2/kraken2/data/small_db/seqid2taxid.map \
     -c 24137 \
     -p 16 \
     -B 16384 \
@@ -60,3 +75,10 @@ pigz -dc k2_pluspf_20240112.tar.gz | tar -t
 3.7M    taxo.k2d
 8.0K    unmapped_accessions.txt
 
+
+```
+build_db: OMP only wants you to use 1 threads
+```
+修改 Makefile，加上 -fopenmp
+定义 _OPENMP 宏（使 #ifdef _OPENMP 生效）
+链接 OpenMP 运行时库（如 libgomp）
