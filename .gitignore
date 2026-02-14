@@ -11,3 +11,4 @@ read/classify
 read/classify.*
 
 *.tmp
+rust_kraken/target

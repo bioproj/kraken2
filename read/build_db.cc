@@ -127,6 +127,7 @@ int main(int argc, char **argv) {
     ProcessSequencesFast(opts, ID_to_taxon_map, kraken_index, taxonomy);
 
   std::cerr << "Writing data to disk... " << std::flush;
+  // 写 hash.k2d
   kraken_index.WriteTable(opts.hashtable_filename.c_str());
 
   IndexOptions index_opts;
@@ -139,7 +140,9 @@ int main(int argc, char **argv) {
   index_opts.revcom_version = CURRENT_REVCOM_VERSION;
   index_opts.db_version = 0;
   index_opts.db_type = 0;
+  
   ofstream opts_fs(opts.options_filename);
+  // 写 opts.k2d
   opts_fs.write((char *) &index_opts, sizeof(index_opts));
   if (! opts_fs.good())
     errx(EX_OSERR, "Unable to write options file %s",

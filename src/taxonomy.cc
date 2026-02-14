@@ -181,6 +181,10 @@ void NCBITaxonomy::ConvertToKrakenTaxonomy(const char *filename) {
   memcpy(taxo.name_data_, name_data.data(), name_data.size());
   taxo.name_data_len_ = name_data.size();
 
+  std::cout << "Taxonomy conversion complete. " << taxo.node_count_ << " nodes, "
+            << taxo.name_data_len_ << " bytes of name data, "
+            << "filename " 
+            << filename << " bytes of rank data." << std::endl;
   taxo.WriteToDisk(filename);
 }
 

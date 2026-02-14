@@ -5,21 +5,35 @@
             "type": "cppdbg",
             "request": "launch",
             "program": "${workspaceFolder}/read/build_db",
-             "args": [
-                "-k", "35",
-                "-l", "31",
-                "-S", "1111111111111111101010101010101",
-                "-H", "hash.k2d.tmp",
-                "-t", "taxo.k2d.tmp",
-                "-o", "opts.k2d.tmp",
-                "-n", "${workspaceFolder}/data/small_db/taxonomy/",
-                "-m", "${workspaceFolder}/data/small_db/seqid2taxid.map",
-                "-c", "24137",
-                "-p", "1",
-                "-B", "16384",
-                "-b", "16384",
-                "-r", "0",
-                "<", "${workspaceFolder}/data/small_db/library/added/FKmc8uicpL.fna"
+            "args": [
+                "-k",
+                "35",
+                "-l",
+                "31",
+                "-S",
+                "1111111111111111101010101010101",
+                "-H",
+                "hash.k2d.tmp",
+                "-t",
+                "taxo.k2d.tmp",
+                "-o",
+                "opts.k2d.tmp",
+                "-n",
+                "${workspaceFolder}/data/small_db/taxonomy/",
+                "-m",
+                "${workspaceFolder}/data/small_db/seqid2taxid.map",
+                "-c",
+                "24137",
+                "-p",
+                "1",
+                "-B",
+                "16384",
+                "-b",
+                "16384",
+                "-r",
+                "0",
+                "<",
+                "${workspaceFolder}/data/small_db/library/added/FKmc8uicpL.fna"
             ],
             "stopAtEntry": false,
             "cwd": "${workspaceFolder}/read",
@@ -40,7 +54,77 @@
                     "ignoreFailures": true
                 }
             ]
+        },
+        {
+            "name": "(gdb) Launch2",
+            "type": "cppdbg",
+            "request": "launch",
+            "program": "${workspaceFolder}/read/build_db",
+            "args": [
+                "-k",
+                "35",
+                "-l",
+                "31",
+                "-S",
+                "1111111111111111101010101010101",
+                "-H",
+                "hash.k2d.tmp",
+                "-t",
+                "taxo.k2d.tmp",
+                "-o",
+                "opts.k2d.tmp",
+                "-n",
+                "/ssd1/wy/workspace2/kraken2-custom/custom_db2/taxonomy/",
+                "-m",
+                "${workspaceFolder}/data/small_db/seqid2taxid.map",
+                "-c",
+                "24137",
+                "-p",
+                "1",
+                "-B",
+                "16384",
+                "-b",
+                "16384",
+                "-r",
+                "0",
+                "<",
+                "${workspaceFolder}/data/small_db/library/added/FKmc8uicpL.fna"
+            ],
+            "stopAtEntry": false,
+            "cwd": "${workspaceFolder}/read",
+            "environment": [],
+            "externalConsole": false,
+            "MIMode": "gdb",
+            "miDebuggerPath": "/usr/bin/gdb",
+            "preLaunchTask": "build",
+            "setupCommands": [
+                {
+                    "description": "Enable pretty-printing for gdb",
+                    "text": "-enable-pretty-printing",
+                    "ignoreFailures": true
+                },
+                {
+                    "description": "Set Disassembly Flavor to Intel",
+                    "text": "-gdb-set disassembly-flavor intel",
+                    "ignoreFailures": true
+                }
+            ]
+        },
+        {
+            "name": "rust",
+            "type": "lldb",
+            "request": "launch",
+            "program": "${workspaceFolder}/rust_kraken/target/debug/rust_kraken",
+            "args": [],
+            
+            "cwd": "${workspaceFolder}/rust_kraken",
+            "cargo": {
+                "cwd": "${workspaceFolder}/rust_kraken",
+                "args": [
+                    "build",
+                    "--bin=rust_kraken"
+                ]
+            },
         }
-        
     ]
 }
