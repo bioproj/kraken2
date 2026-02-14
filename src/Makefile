@@ -1,17 +1,4 @@
-CXX ?= g++
-KRAKEN2_SKIP_FOPENMP ?= -fopenmp
-CXXFLAGS = $(KRAKEN2_SKIP_FOPENMP) -Wall -std=c++11 -O3 -fPIC
-CXXFLAGS += -DLINEAR_PROBING
-CFLAGS = -Wall -std=c99 -O3 -g3
 
-.PHONY: all clean install
-
-PROGS = estimate_capacity build_db classify dump_table lookup_accession_numbers k2mask blast_to_fasta libtax.so
-
-all: $(PROGS)
-
-install: $(PROGS)
-	cp $(PROGS) "$(KRAKEN2_DIR)/"
 
 clean:
 	rm -f *.o $(PROGS)
@@ -39,27 +26,4 @@ blast_to_fasta.o: blast_to_fasta.c
 blast_utils.o: blast_utils.c
 
 build_db: build_db.o mmap_file.o compact_hash.o taxonomy.o seqreader.o mmscanner.o omp_hack.o utilities.o
-	$(CXX) $(CXXFLAGS) -o $@ build_db.o mmap_file.o compact_hash.o taxonomy.o seqreader.o mmscanner.o omp_hack.o utilities.o $(LDFLAGS)
-
-classify: classify.o reports.o hyperloglogplus.o mmap_file.o compact_hash.o taxonomy.o seqreader.o mmscanner.o omp_hack.o aa_translate.o utilities.o
-	$(CXX) $(CXXFLAGS) -o $@ classify.o reports.o hyperloglogplus.o mmap_file.o compact_hash.o taxonomy.o seqreader.o mmscanner.o omp_hack.o aa_translate.o utilities.o $(LDFLAGS)
-
-estimate_capacity: estimate_capacity.o seqreader.o mmscanner.o omp_hack.o utilities.o
-	$(CXX) $(CXXFLAGS) -o $@ estimate_capacity.o seqreader.o mmscanner.o omp_hack.o utilities.o $(LDFLAGS)
-
-dump_table: dump_table.o mmap_file.o compact_hash.o omp_hack.o taxonomy.o reports.o hyperloglogplus.o
-	$(CXX) $(CXXFLAGS) -o $@ dump_table.o mmap_file.o compact_hash.o omp_hack.o taxonomy.o reports.o hyperloglogplus.o $(LDFLAGS)
-
-lookup_accession_numbers: lookup_accession_numbers.o mmap_file.o omp_hack.o utilities.o
-	$(CXX) $(CXXFLAGS) -o $@ lookup_accession_numbers.o mmap_file.o omp_hack.o utilities.o $(LDFLAGS)
-
-k2mask: k2mask.o seqreader.o
-	$(CXX) $(CXXFLAGS) -o $@ k2mask.o seqreader.o $(LDFLAGS) -lz -pthread
-
-blast_to_fasta: blast_to_fasta.o blast_defline.o blast_utils.o
-	$(CC) $(CFLAGS) -o  $@  blast_to_fasta.o blast_utils.o blast_defline.o $(LDFLAGS) -lm -lc
-
-libtax.o: libtax.cc
-
-libtax.so: taxonomy.o mmap_file.o libtax.o
-	$(CXX) $(CXXFLAGS) -shared -o libtax.so taxonomy.o mmap_file.o libtax.o $(LDFLAGS)
+	g++ -Wall -std=c++11 -O3 -fPIC -DLINEAR_PROBING -o $@ build_db.o mmap_file.o compact_hash.o taxonomy.o seqreader.o mmscanner.o omp_hack.o utilities.o 

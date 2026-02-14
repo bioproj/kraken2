@@ -1,19 +1,62 @@
-[![install with bioconda](https://img.shields.io/badge/install%20with-bioconda-brightgreen.svg?style=flat)](http://bioconda.github.io/recipes/kraken2/README.html)
-[![European Galaxy server](https://img.shields.io/badge/usegalaxy-.eu-brightgreen?logo=data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABgAAAASCAYAAABB7B6eAAAABGdBTUEAALGPC/xhBQAAACBjSFJNAAB6JgAAgIQAAPoAAACA6AAAdTAAAOpgAAA6mAAAF3CculE8AAAACXBIWXMAAAsTAAALEwEAmpwYAAACC2lUWHRYTUw6Y29tLmFkb2JlLnhtcAAAAAAAPHg6eG1wbWV0YSB4bWxuczp4PSJhZG9iZTpuczptZXRhLyIgeDp4bXB0az0iWE1QIENvcmUgNS40LjAiPgogICA8cmRmOlJERiB4bWxuczpyZGY9Imh0dHA6Ly93d3cudzMub3JnLzE5OTkvMDIvMjItcmRmLXN5bnRheC1ucyMiPgogICAgICA8cmRmOkRlc2NyaXB0aW9uIHJkZjphYm91dD0iIgogICAgICAgICAgICB4bWxuczp0aWZmPSJodHRwOi8vbnMuYWRvYmUuY29tL3RpZmYvMS4wLyI+CiAgICAgICAgIDx0aWZmOlJlc29sdXRpb25Vbml0PjI8L3RpZmY6UmVzb2x1dGlvblVuaXQ+CiAgICAgICAgIDx0aWZmOkNvbXByZXNzaW9uPjE8L3RpZmY6Q29tcHJlc3Npb24+CiAgICAgICAgIDx0aWZmOk9yaWVudGF0aW9uPjE8L3RpZmY6T3JpZW50YXRpb24+CiAgICAgICAgIDx0aWZmOlBob3RvbWV0cmljSW50ZXJwcmV0YXRpb24+MjwvdGlmZjpQaG90b21ldHJpY0ludGVycHJldGF0aW9uPgogICAgICA8L3JkZjpEZXNjcmlwdGlvbj4KICAgPC9yZGY6UkRGPgo8L3g6eG1wbWV0YT4KD0UqkwAAAn9JREFUOBGlVEuLE0EQruqZiftwDz4QYT1IYM8eFkHFw/4HYX+GB3/B4l/YP+CP8OBNTwpCwFMQXAQPKtnsg5nJZpKdni6/6kzHvAYDFtRUT71f3UwAEbkLch9ogQxcBwRKMfAnM1/CBwgrbxkgPAYqlBOy1jfovlaPsEiWPROZmqmZKKzOYCJb/AbdYLso9/9B6GppBRqCrjSYYaquZq20EUKAzVpjo1FzWRDVrNay6C/HDxT92wXrAVCH3ASqq5VqEtv1WZ13Mdwf8LFyyKECNbgHHAObWhScf4Wnj9CbQpPzWYU3UFoX3qkhlG8AY2BTQt5/EA7qaEPQsgGLWied0A8VKrHAsCC1eJ6EFoUd1v6GoPOaRAtDPViUr/wPzkIFV9AaAZGtYB568VyJfijV+ZBzlVZJ3W7XHB2RESGe4opXIGzRTdjcAupOK09RA6kzr1NTrTj7V1ugM4VgPGWEw+e39CxO6JUw5XhhKihmaDacU2GiR0Ohcc4cZ+Kq3AjlEnEeRSazLs6/9b/kh4eTC+hngE3QQD7Yyclxsrf3cpxsPXn+cFdenF9aqlBXMXaDiEyfyfawBz2RqC/O9WF1ysacOpytlUSoqNrtfbS642+4D4CS9V3xb4u8P/ACI4O810efRu6KsC0QnjHJGaq4IOGUjWTo/YDZDB3xSIxcGyNlWcTucb4T3in/3IaueNrZyX0lGOrWndstOr+w21UlVFokILjJLFhPukbVY8OmwNQ3nZgNJNmKDccusSb4UIe+gtkI+9/bSLJDjqn763f5CQ5TLApmICkqwR0QnUPKZFIUnoozWcQuRbC0Km02knj0tPYx63furGs3x/iPnz83zJDVNtdP3QAAAABJRU5ErkJggg==)](https://usegalaxy.eu/root?tool_id=kraken2)
+/opt/workspace/kraken2/install/kraken2-build  --download-taxonomy --db small_db
+/opt/workspace/kraken2/install/kraken2-build --add-to-library COVID_19.fa --db small_db
+/opt/workspace/kraken2/install/kraken2-build --build --db small_db
+/opt/workspace/kraken2/install/kraken2 --db /opt/workspace/kraken2/kraken2/data/small_db  COVID_19.fa 
 
-Kraken 2
-========
+/opt/workspace/kraken2/install/classify \
+    -H /opt/workspace/kraken2/kraken2/data/small_db/hash.k2d \
+    -t /opt/workspace/kraken2/kraken2/data/small_db/taxo.k2d \
+    -o /opt/workspace/kraken2/kraken2/data/small_db/opts.k2d \
+    -p 1 -T 0 -Q 0 -g 2 COVID_19.fa
 
-The second version of the Kraken taxonomic sequence classification system
 
-Please refer to the Operating Manual (in `docs/MANUAL.html`) for details on
-how to use Kraken 2.
+/opt/workspace/kraken2/install/build_db \
+    -k 35 \
+    -l 31 \
+    -S 1111111111111111101010101010101            \
+    -H hash.k2d.tmp \
+    -t taxo.k2d.tmp \
+    -o opts.k2d.tmp \
+    -n taxonomy/ \
+    -m seqid2taxid.map          \
+    -c 24137 \
+    -p 1  \
+    -B 16384 \
+    -b 16384           \
+    -r 0 
 
-Publications
-------------
 
-For additional implementation details and guidance on using Kraken 2, you can also refer to:
-- The [paper describing the first version of Kraken](https://dx.doi.org/10.1186/gb-2014-15-3-r46).  Note that Kraken 2 is a rewrite of Kraken 1 and is not backwards compatible with Kraken 1.
-- The [paper describing KrakenUniq](https://dx.doi.org/10.1186/s13059-018-1568-0).  KrakenUniq's HLL-based functionality is incorporated in Kraken 2 when using the `--report-minimizer-data` flag described in the Operating Manual.
-- The [Kraken 2 paper](https://dx.doi.org/10.1186/s13059-019-1891-0).
-- A [protocol paper describing use of Kraken 2](https://dx.doi.org/10.1038/s41596-022-00738-y).
+cat /opt/workspace/kraken2/kraken2/data/small_db/library/added/O_jVnIIAMS.fna |  /opt/workspace/kraken2/install/build_db \
+    -k 35 \
+    -l 31 \
+    -S 1111111111111111101010101010101 \
+    -H hash.k2d.tmp \
+    -t taxo.k2d.tmp \
+    -o opts.k2d.tmp \
+    -n taxonomy/ \
+    -m seqid2taxid.map \
+    -c 24137 \
+    -p 16 \
+    -B 16384 \
+    -b 16384 \
+    -r 0
+
+
+59G     k2_pluspf_20240112.tar.gz
+pigz -dc k2_pluspf_20240112.tar.gz | tar -t
+3.9M    database100mers.kmer_distrib
+3.6M    database150mers.kmer_distrib
+3.3M    database200mers.kmer_distrib
+3.0M    database250mers.kmer_distrib
+2.8M    database300mers.kmer_distrib
+4.5M    database50mers.kmer_distrib
+4.2M    database75mers.kmer_distrib
+77G     hash.k2d
+3.2M    inspect.txt
+2.4M    ktaxonomy.tsv
+44M     library_report.tsv
+4.0K    opts.k2d
+6.8M    seqid2taxid.map
+3.7M    taxo.k2d
+8.0K    unmapped_accessions.txt
+
